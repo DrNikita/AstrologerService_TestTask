@@ -1,0 +1,8 @@
+host: localhost:8080
+info:
+  contact: {}
+  description: Astrologer service test task
+  title: AstrologerService
+  version: "3.0"
+paths: {}
+swagger: "2.0"
