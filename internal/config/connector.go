@@ -3,10 +3,10 @@ package config
 import (
 	"fmt"
 	"github.com/DrNikita/AstrologerService_TestTask/internal/status"
-	"log"
-
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
+
+	"log"
 )
 
 var db *gorm.DB
