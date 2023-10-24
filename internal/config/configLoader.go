@@ -15,12 +15,14 @@ type Config struct {
 	DbSslMode    string `map-structure:"DB_SSLMODE"`
 	AllowOrigins string `map-structure:"ALLOW_ORIGINS"`
 	AppPort      string `map-structure:"APP_PORT"`
+	Url          string `map-structure:"URL"`
+	ApiKey       string `map-structure:"API_KEY"`
 }
 
 var conf Config
 
 func init() {
-	err := godotenv.Load("example.env")
+	err := godotenv.Load("config/example.env")
 	if err != nil {
 		log.Warning("Couldn't load env variables to connect to DB...")
 	}
@@ -33,6 +35,9 @@ func init() {
 		DbPass:       getEnv("DB_PASS", ""),
 		DbSslMode:    getEnv("DB_SSLMODE", ""),
 		AllowOrigins: getEnv("ALLOW_ORIGINS", ""),
+		AppPort:      getEnv("APP_PORT", ""),
+		Url:          getEnv("URL", ""),
+		ApiKey:       getEnv("API_KEY", ""),
 	}
 }
 
