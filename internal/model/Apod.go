@@ -42,7 +42,7 @@ func (ar *ApodResponse) ApodResponseToApod(apod *Apod) error {
 	}
 
 	apod.Image = image
-	return err
+	return nil
 }
 
 func getImageByUrl(iu string) (imageData []byte, err error) {
