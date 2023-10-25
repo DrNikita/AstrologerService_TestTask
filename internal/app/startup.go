@@ -4,6 +4,7 @@ import (
 	"github.com/DrNikita/AstrologerService_TestTask/docs"
 	_ "github.com/DrNikita/AstrologerService_TestTask/docs"
 	config2 "github.com/DrNikita/AstrologerService_TestTask/internal/config"
+	"github.com/DrNikita/AstrologerService_TestTask/internal/repository"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	log "github.com/sirupsen/logrus"
@@ -30,4 +31,5 @@ func Run() {
 }
 
 func setupRoutes(router *gin.Engine) {
+	repository.SetupRoutes(router)
 }

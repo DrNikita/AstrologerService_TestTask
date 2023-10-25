@@ -22,12 +22,15 @@ type Config struct {
 var conf Config
 
 func init() {
-	err := godotenv.Load("example.env")
+	err := godotenv.Load()
 	if err != nil {
 		log.Warning("Couldn't load env variables to connect to DB...")
 	}
 
 	conf = Config{
+		AppPort:      getEnv("APP_PORT", ""),
+		Url:          getEnv("URL", ""),
+		ApiKey:       getEnv("API_KEY", ""),
 		DbHost:       getEnv("DB_HOST", ""),
 		DbPort:       getEnv("DB_PORT", ""),
 		DbName:       getEnv("DB_NAME", ""),
@@ -35,9 +38,6 @@ func init() {
 		DbPass:       getEnv("DB_PASS", ""),
 		DbSslMode:    getEnv("DB_SSLMODE", ""),
 		AllowOrigins: getEnv("ALLOW_ORIGINS", ""),
-		AppPort:      getEnv("APP_PORT", ""),
-		Url:          getEnv("URL", ""),
-		ApiKey:       getEnv("API_KEY", ""),
 	}
 }
 
