@@ -21,7 +21,7 @@ func init() {
 
 	db, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
-		log.Fatalf(status.DbConnectionError().Error())
+		log.Fatalf(status.DbConnectionError().Error(), config)
 	}
 }
 

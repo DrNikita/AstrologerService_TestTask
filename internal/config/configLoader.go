@@ -22,7 +22,7 @@ type Config struct {
 var conf Config
 
 func init() {
-	err := godotenv.Load("config/example.env")
+	err := godotenv.Load("example.env")
 	if err != nil {
 		log.Warning("Couldn't load env variables to connect to DB...")
 	}

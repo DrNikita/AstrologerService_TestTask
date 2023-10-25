@@ -1,8 +1,59 @@
+basePath: /api/v1/apod
+definitions:
+  github_com_DrNikita_AstrologerService_TestTask_internal_model.Apod:
+    properties:
+      createdAt:
+        type: string
+      date:
+        type: string
+      deletedAt:
+        $ref: '#/definitions/gorm.DeletedAt'
+      explanation:
+        type: string
+      id:
+        type: integer
+      image:
+        items:
+          type: integer
+        type: array
+      media_type:
+        type: string
+      service_version:
+        type: string
+      title:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+  gorm.DeletedAt:
+    properties:
+      time:
+        type: string
+      valid:
+        description: Valid is true if Time is not NULL
+        type: boolean
+    type: object
 host: localhost:8080
 info:
   contact: {}
   description: Astrologer service test task
   title: AstrologerService
   version: "3.0"
-paths: {}
+paths:
+  /find-all:
+    get:
+      consumes:
+      - application/json
+      description: get apod records
+      operationId: get-apod
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_DrNikita_AstrologerService_TestTask_internal_model.Apod'
+      summary: Get apod records
+      tags:
+      - APOD
 swagger: "2.0"

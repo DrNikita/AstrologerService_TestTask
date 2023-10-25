@@ -14,14 +14,91 @@ const docTemplate = `{
     },
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
-    "paths": {}
+    "paths": {
+        "/find-all": {
+            "get": {
+                "description": "get apod records",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "APOD"
+                ],
+                "summary": "Get apod records",
+                "operationId": "get-apod",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_DrNikita_AstrologerService_TestTask_internal_model.Apod"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "github_com_DrNikita_AstrologerService_TestTask_internal_model.Apod": {
+            "type": "object",
+            "properties": {
+                "createdAt": {
+                    "type": "string"
+                },
+                "date": {
+                    "type": "string"
+                },
+                "deletedAt": {
+                    "$ref": "#/definitions/gorm.DeletedAt"
+                },
+                "explanation": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "image": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "media_type": {
+                    "type": "string"
+                },
+                "service_version": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "updatedAt": {
+                    "type": "string"
+                }
+            }
+        },
+        "gorm.DeletedAt": {
+            "type": "object",
+            "properties": {
+                "time": {
+                    "type": "string"
+                },
+                "valid": {
+                    "description": "Valid is true if Time is not NULL",
+                    "type": "boolean"
+                }
+            }
+        }
+    }
 }`
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
 	Version:          "3.0",
 	Host:             "localhost:8080",
-	BasePath:         "",
+	BasePath:         "/api/v1/apod",
 	Schemes:          []string{},
 	Title:            "AstrologerService",
 	Description:      "Astrologer service test task",
