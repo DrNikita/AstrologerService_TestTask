@@ -28,6 +28,10 @@ type Apod struct {
 	Image          []byte     `json:"image"`
 }
 
+func (Apod) TableName() string {
+	return "day_info.apod"
+}
+
 func (ar *ApodResponse) ApodResponseToApod(apod *Apod) error {
 	apod.Date = ar.Date
 	apod.Explanation = ar.Explanation

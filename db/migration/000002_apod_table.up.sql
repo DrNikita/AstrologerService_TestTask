@@ -1,8 +1,12 @@
 CREATE TABLE IF NOT EXISTS day_info.apod (
     id SERIAL PRIMARY KEY,
-    date DATE NOT NULL,
-    explanation TEXT NOT NULL,
-    image TEXT NOT NULL,
-    media_type TEXT NOT NULL,
-    service_version TEXT NOT NULL
+    date TIMESTAMP,
+    explanation TEXT,
+    media_type VARCHAR(255),
+    service_version VARCHAR(255),
+    title VARCHAR(255),
+    image BYTEA,
+    created_at TIMESTAMP,
+    updated_at TIMESTAMP,
+    deleted_at TIMESTAMP
 );

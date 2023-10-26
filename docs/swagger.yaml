@@ -46,14 +46,73 @@ paths:
       - application/json
       description: get apod records
       operationId: get-apod
+      parameters:
+      - description: Page
+        in: query
+        name: page
+        type: integer
+      - description: Size
+        in: query
+        name: perPage
+        type: integer
+      - description: Sort field
+        in: query
+        name: sortBy
+        type: string
+      - description: Direction
+        in: query
+        name: sortDirection
+        type: string
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/github_com_DrNikita_AstrologerService_TestTask_internal_model.Apod'
+            items:
+              $ref: '#/definitions/github_com_DrNikita_AstrologerService_TestTask_internal_model.Apod'
+            type: array
       summary: Get apod records
+      tags:
+      - APOD
+  /find-by-date:
+    get:
+      consumes:
+      - application/json
+      description: get apod records by date
+      operationId: get-apod-by-date
+      parameters:
+      - description: date
+        in: query
+        name: date
+        required: true
+        type: string
+      - description: Page
+        in: query
+        name: page
+        type: integer
+      - description: Size
+        in: query
+        name: perPage
+        type: integer
+      - description: Sort field
+        in: query
+        name: sortBy
+        type: string
+      - description: Direction
+        in: query
+        name: sortDirection
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/github_com_DrNikita_AstrologerService_TestTask_internal_model.Apod'
+            type: array
+      summary: Get apod records by date
       tags:
       - APOD
 swagger: "2.0"

@@ -10,16 +10,16 @@ func DbConnectionError() error {
 }
 
 func PaginationDataValidationError() error {
-	err = errors.New("Некорректные данные для сортировки")
+	err = errors.New("incorrect pagination data")
 	return err
 }
 
 func ExecutingQueryError(info string) error {
-	err = errors.New("Неудалось выполнить запрос " + info)
+	err = errors.New("error executing query " + info)
 	return err
 }
 
 func DataConversionError() error {
-	err = errors.New("Некорректный формат данных")
+	err = errors.New("incorrect data conversion")
 	return err
 }

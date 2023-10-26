@@ -29,11 +29,100 @@ const docTemplate = `{
                 ],
                 "summary": "Get apod records",
                 "operationId": "get-apod",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Page",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Size",
+                        "name": "perPage",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Sort field",
+                        "name": "sortBy",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Direction",
+                        "name": "sortDirection",
+                        "in": "query"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/github_com_DrNikita_AstrologerService_TestTask_internal_model.Apod"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/github_com_DrNikita_AstrologerService_TestTask_internal_model.Apod"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/find-by-date": {
+            "get": {
+                "description": "get apod records by date",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "APOD"
+                ],
+                "summary": "Get apod records by date",
+                "operationId": "get-apod-by-date",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "date",
+                        "name": "date",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Page",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Size",
+                        "name": "perPage",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Sort field",
+                        "name": "sortBy",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Direction",
+                        "name": "sortDirection",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/github_com_DrNikita_AstrologerService_TestTask_internal_model.Apod"
+                            }
                         }
                     }
                 }
