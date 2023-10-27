@@ -14,7 +14,8 @@ import (
 func SetupRoutes(router *gin.Engine) {
 	api := router.Group("/api/v1/apod")
 	api.GET("/find-all", GetAstrologers)
-	api.GET("/find-by-date", GetAstrologers)
+	api.GET("/find-by-date", GetAstrologersByDate)
+	api.GET("/image", DailySaveDayInfo)
 }
 
 // @Summary Get apod records
@@ -46,16 +47,7 @@ func GetAstrologers(c *gin.Context) {
 		return
 	}
 
-	ddd := model.Apod{
-		Date:           model.CustomTime(time.Now()),
-		Explanation:    "first apod",
-		MediaType:      "image",
-		ServiceVersion: "1.0",
-		Title:          "helloworld",
-		Image:          []byte{},
-	}
-
-	config.GetDBInstance().Create(&ddd)
+	config.GetDBInstance().Create(&model.Apod{})
 
 	c.JSON(http.StatusOK, pr.New(apod, p, nil))
 }

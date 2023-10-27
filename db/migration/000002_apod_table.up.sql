@@ -1,10 +1,11 @@
-CREATE TABLE IF NOT EXISTS day_info.apod (
+CREATE TABLE day_info.apod (
     id SERIAL PRIMARY KEY,
+    copyright TEXT,
     date TIMESTAMP,
     explanation TEXT,
-    media_type VARCHAR(255),
-    service_version VARCHAR(255),
-    title VARCHAR(255),
+    media_type TEXT,
+    service_version TEXT,
+    title TEXT,
     image BYTEA,
     created_at TIMESTAMP,
     updated_at TIMESTAMP,

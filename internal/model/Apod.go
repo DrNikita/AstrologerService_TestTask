@@ -1,17 +1,12 @@
 package model
 
-import (
-	"fmt"
-	log "github.com/sirupsen/logrus"
-	"gorm.io/gorm"
-	"io"
-	"net/http"
-)
+import "gorm.io/gorm"
 
 type ApodResponse struct {
+	Copyright      string     `json:"copyright"`
 	Date           CustomTime `json:"date"`
 	Explanation    string     `json:"explanation"`
-	HDUrl          string     `json:"hdurl"`
+	HdUrl          string     `json:"hdurl"`
 	MediaType      string     `json:"media_type"`
 	ServiceVersion string     `json:"service_version"`
 	Title          string     `json:"title"`
@@ -20,6 +15,7 @@ type ApodResponse struct {
 
 type Apod struct {
 	gorm.Model
+	Copyright      string     `json:"copyright"`
 	Date           CustomTime `json:"date"`
 	Explanation    string     `json:"explanation"`
 	MediaType      string     `json:"media_type"`
@@ -32,41 +28,14 @@ func (Apod) TableName() string {
 	return "day_info.apod"
 }
 
-func (ar *ApodResponse) ApodResponseToApod(apod *Apod) error {
-	apod.Date = ar.Date
-	apod.Explanation = ar.Explanation
-	apod.MediaType = ar.MediaType
-	apod.ServiceVersion = ar.ServiceVersion
-	apod.Title = ar.Title
-
-	image, err := getImageByUrl(ar.HDUrl)
-	if err != nil {
-		log.Warning(err)
-		return err
+func (ar *ApodResponse) ToApod(imgBytes []byte) *Apod {
+	return &Apod{
+		Copyright:      ar.Copyright,
+		Date:           ar.Date,
+		Explanation:    ar.Explanation,
+		MediaType:      ar.MediaType,
+		ServiceVersion: ar.ServiceVersion,
+		Title:          ar.Title,
+		Image:          imgBytes,
 	}
-
-	apod.Image = image
-	return nil
-}
-
-func getImageByUrl(iu string) (imageData []byte, err error) {
-	resp, err := http.Get(iu)
-	if err != nil {
-		log.Warning(fmt.Sprintf("error loading image by url: %s. Error: %v", iu, err))
-		return
-	}
-	defer resp.Body.Close()
-
-	if resp.StatusCode != http.StatusOK {
-		log.Warning(fmt.Sprintf("error. Status code: %d", resp.StatusCode))
-		return
-	}
-
-	imageData, err = io.ReadAll(resp.Body)
-	if err != nil {
-		log.Warning("error reading image")
-		return
-	}
-
-	return
 }
