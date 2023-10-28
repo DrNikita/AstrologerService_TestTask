@@ -4,28 +4,29 @@ import (
 	"encoding/json"
 	"github.com/DrNikita/AstrologerService_TestTask/internal/config"
 	"github.com/DrNikita/AstrologerService_TestTask/internal/model"
-	"github.com/gin-gonic/gin"
+	log "github.com/sirupsen/logrus"
 	"io"
 	"net/http"
 )
 
-func DailySaveDayInfo(c *gin.Context) {
+func DailySaveDayInfo() error {
 	ar, err := getDayInfo()
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-		return
+		return err
 	}
-	imgBytes, err := getApod(ar.Url)
+	imgBytes, err := getImage(ar.Url)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-		return
+		return err
 	}
 
 	apod := ar.ToApod(imgBytes)
 	err = config.GetDBInstance().Create(&apod).Error
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return err
 	}
+
+	log.Info("day info saved")
+	return nil
 }
 
 func getDayInfo() (ar model.ApodResponse, err error) {
@@ -51,7 +52,7 @@ func getDayInfo() (ar model.ApodResponse, err error) {
 	return ar, nil
 }
 
-func getApod(url string) ([]byte, error) {
+func getImage(url string) ([]byte, error) {
 	resp, err := http.Get(url)
 	if err != nil {
 		return nil, err

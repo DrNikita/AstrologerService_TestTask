@@ -15,7 +15,6 @@ func SetupRoutes(router *gin.Engine) {
 	api := router.Group("/api/v1/apod")
 	api.GET("/find-all", GetAstrologers)
 	api.GET("/find-by-date", GetAstrologersByDate)
-	api.GET("/image", DailySaveDayInfo)
 }
 
 // @Summary Get apod records

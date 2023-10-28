@@ -8,9 +8,9 @@ import (
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	log "github.com/sirupsen/logrus"
-
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
+	"time"
 )
 
 func Run() {
@@ -23,6 +23,16 @@ func Run() {
 	})
 
 	config := config2.GetConfigurationInstance()
+
+	go func() {
+		for {
+			err := repository.DailySaveDayInfo()
+			if err != nil {
+				log.Warningf("couldn't save day ingo")
+			}
+			time.Sleep(24 * time.Hour)
+		}
+	}()
 
 	err := router.Run(config.AppPort)
 	if err != nil {
