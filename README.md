@@ -15,3 +15,4 @@
 ## Запуск приложения
     docker compose up
     docker compose down
+Swagger: http://localhost:8080/swagger/index.html
