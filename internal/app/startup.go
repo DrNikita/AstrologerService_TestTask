@@ -7,6 +7,7 @@ import (
 	"github.com/DrNikita/AstrologerService_TestTask/internal/repository"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
+	"github.com/madflojo/tasks"
 	log "github.com/sirupsen/logrus"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
@@ -24,17 +25,24 @@ func Run() {
 
 	config := config2.GetConfigurationInstance()
 
-	go func() {
-		for {
-			err := repository.DailySaveDayInfo()
-			if err != nil {
-				log.Warningf("couldn't save day ingo")
-			}
-			time.Sleep(24 * time.Hour)
-		}
-	}()
+	scheduler := tasks.New()
+	defer scheduler.Stop()
 
-	err := router.Run(config.AppPort)
+	_, err := scheduler.Add(&tasks.Task{
+		Interval: 24 * time.Hour,
+		TaskFunc: func() error {
+			err := repository.DailySaveDayInfo()
+			return err
+		},
+		ErrFunc: func(e error) {
+			log.Printf("an error occurred when executing task %s", e)
+		},
+	})
+	if err != nil {
+		log.Warningf("error executing task: %s", err)
+	}
+
+	err = router.Run(config.AppPort)
 	if err != nil {
 		log.Fatalf("couldn't run app on port: " + config.AppPort)
 	}
